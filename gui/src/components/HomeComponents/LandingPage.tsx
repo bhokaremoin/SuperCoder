@@ -104,8 +104,8 @@ export default function LandingPage() {
 
   const toSetUserData = (user, access_token: string) => {
     const userData: userData = {
-      userEmail: user.Email,
-      userName: user.Name,
+      userEmail: user.email,
+      userName: user.name,
       accessToken: access_token,
     };
     setUserData(userData);
