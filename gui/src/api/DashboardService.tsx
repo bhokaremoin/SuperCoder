@@ -24,11 +24,6 @@ export const checkHealth = () => {
   return api.get(`/health`);
 };
 
-// GitHub Sign In
-export const githubSignIn = () => {
-  return api.get(`/github/signin`);
-};
-
 // Auth APIS
 export const checkUserEmailExists = (user_email: string) => {
   return api.get(`/auth/check_user`, {
@@ -36,14 +31,12 @@ export const checkUserEmailExists = (user_email: string) => {
   });
 };
 
-export const login = (payload: authPayload, invite_token: string = null) => {
-  const headers = invite_token ? { 'X-INVITE-TOKEN': invite_token } : {};
-  return api.post(`/auth/sign_in`, payload, { headers });
+export const login = (payload: authPayload) => {
+  return api.post(`/auth/sign_in`, payload);
 };
 
-export const signUp = (payload: authPayload, invite_token: string = null) => {
-  const headers = invite_token ? { 'X-INVITE-TOKEN': invite_token } : {};
-  return api.post(`/auth/sign_up`, payload, { headers });
+export const signUp = (payload: authPayload) => {
+  return api.post(`/auth/sign_up`, payload);
 };
 
 // Project APIs
