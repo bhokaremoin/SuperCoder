@@ -17,7 +17,6 @@ export const setUserData = (data: userData) => {
     setCookie('accessToken', data.accessToken);
     localStorage.setItem('userName', data.userName);
     localStorage.setItem('userEmail', data.userEmail);
-    localStorage.setItem('organisationId', data.organisationId);
     if (window.clarity) {
       window.clarity('set', 'User Email', data.userEmail);
     }
@@ -37,7 +36,6 @@ export const logout = () => {
     localStorage.removeItem('projectURLBackend');
     localStorage.removeItem('projectName');
     localStorage.removeItem('storyId');
-    localStorage.removeItem('organisationId');
     localStorage.removeItem('projectFrontendFramework');
   }
 
