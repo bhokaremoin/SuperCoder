@@ -133,8 +133,8 @@ export const getPullRequestDiff = (pr_id: number) => {
 };
 
 // Model APIs
-export const getLLMAPIKeys = (organisation_id: string) => {
-  return api.get(`/llm_api_key/${organisation_id}`);
+export const getLLMAPIKeys = () => {
+  return api.get(`/llm_api_key`);
 };
 
 export const createOrUpdateLLMAPIKey = (
@@ -193,20 +193,14 @@ export const updateReviewViewedStatus = (story_id: number) => {
 };
 
 // Teams APIS
-export const getOrganisationMembers = (organisation_id: string) => {
-  return api.get(`/organisation/${organisation_id}/fetch_users`);
+export const getOrganisationMembers = () => {
+  return api.get(`/organisation/fetch_users`);
 };
 
 export const addUserToOrganisation = (payload: InviteUserPayload) => {
-  return api.post(
-    `/organisation/${payload.organisationId}/invite_user`,
-    payload,
-  );
+  return api.post(`/organisation/invite_user`, payload);
 };
 
 export const removeUserFromOrganisation = (payload: RemoveUserPayload) => {
-  return api.post(
-    `/organisation/${payload.organisationId}/remove_user`,
-    payload,
-  );
+  return api.post(`/organisation/remove_user`, payload);
 };

@@ -169,8 +169,7 @@ export function setProjectDetails(project: ProjectTypes) {
 
 export async function checkModelNotAdded(id: string) {
   try {
-    const organisation_id = localStorage.getItem('organisationId');
-    const response = await getLLMAPIKeys(organisation_id);
+    const response = await getLLMAPIKeys();
     if (response) {
       const data = response.data;
       if (Array.isArray(data)) {

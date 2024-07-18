@@ -31,25 +31,19 @@ export default function Users() {
   const [removeUserDetails, setRemoveUserDetails] =
     useState<UserTeamDetails | null>(null);
   const [emailErrorMsg, setEmailErrorMsg] = useState<string>('');
-  const [organizationId, setOrganizationId] = useState<string | null>(null);
 
   useEffect(() => {
-    let organisation_id = null;
-    if (typeof window !== 'undefined') {
-      organisation_id = localStorage.getItem('organisationId');
-      setOrganizationId(organisation_id);
-    }
-    fetchUsersFromOrganisation(organisation_id).then().catch();
+    fetchUsersFromOrganisation().then().catch();
   }, []);
 
   useEffect(() => {
     onSetEmail('');
   }, [openInviteUserModal]);
 
-  async function fetchUsersFromOrganisation(organisation_id) {
+  async function fetchUsersFromOrganisation() {
     try {
       const userEmail = localStorage.getItem('userEmail');
-      const response = await getOrganisationMembers(organisation_id);
+      const response = await getOrganisationMembers();
       if (response) {
         const data = response.data;
         const users = data.users;
@@ -67,13 +61,11 @@ export default function Users() {
     try {
       setIsLoading(true);
       const data: InviteUserPayload = {
-        organisationId: organizationId,
         email: inviteUserEmail,
-        current_user_id: userList ? userList[0].id : -1,
       };
       const response = await addUserToOrganisation(data);
       if (response) {
-        fetchUsersFromOrganisation(organizationId).catch();
+        fetchUsersFromOrganisation().catch();
       }
     } catch (error) {
       console.error(error);
@@ -87,12 +79,11 @@ export default function Users() {
     try {
       setIsLoading(true);
       const data: RemoveUserPayload = {
-        organisationId: organizationId,
         user_id: removeUserDetails.id,
       };
       const response = await removeUserFromOrganisation(data);
       if (response) {
-        fetchUsersFromOrganisation(organizationId).then().catch();
+        fetchUsersFromOrganisation().then().catch();
       }
     } catch (error) {
       console.error(error);
