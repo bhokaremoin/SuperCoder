@@ -20,7 +20,6 @@ import toast, { Toaster } from 'react-hot-toast';
 export default function LandingPage() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isEmailRegistered, setIsEmailRegistered] = useState<boolean | null>(
     null,
   );
@@ -92,7 +91,6 @@ export default function LandingPage() {
     setEmail(value);
     setIsEmailRegistered(null);
     setPassword('');
-    setShowPassword(false);
     setEmailErrorMsg('');
     setPasswordErrorMsg('');
   };
@@ -141,7 +139,10 @@ export default function LandingPage() {
         email: email,
         password: password,
       };
-      const response = await login(payload, inviteToken);
+      if (inviteToken) {
+        payload.inviteToken = inviteToken;
+      }
+      const response = await login(payload);
       if (response) {
         const data = response.data;
         if (data.success) {
@@ -165,11 +166,14 @@ export default function LandingPage() {
         return;
       }
       setIsButtonLoading(true);
-      let payload: authPayload = {
+      const payload: authPayload = {
         email: email,
         password: password,
       };
-      const response = await signUp(payload, inviteToken);
+      if (inviteToken) {
+        payload.inviteToken = inviteToken;
+      }
+      const response = await signUp(payload);
       if (response) {
         const data = response.data;
         if (data.success) {
@@ -252,19 +256,11 @@ export default function LandingPage() {
                     placeholder={
                       isEmailRegistered ? 'Enter Password' : 'Set Password'
                     }
-                    format={showPassword ? 'text' : 'password'}
+                    format={'password'}
                     value={password}
                     setter={onSetPassword}
-                    endIcon={
-                      showPassword
-                        ? imagePath.passwordUnhidden
-                        : imagePath.passwordHidden
-                    }
                     alt={'password_icons'}
                     endIconSize={'size-4'}
-                    endIconClick={() =>
-                      setShowPassword((prevState) => !prevState)
-                    }
                     errorMessage={passwordErrorMsg}
                     isError={passwordErrorMsg !== ''}
                   />

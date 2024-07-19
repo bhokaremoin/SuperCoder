@@ -32,6 +32,24 @@ export default function Users() {
     useState<UserTeamDetails | null>(null);
   const [emailErrorMsg, setEmailErrorMsg] = useState<string>('');
 
+  const handleOpenRemoveModal = (data: UserTeamDetails) => {
+    setRemoveUserDetails(data);
+    setOpenRemoveUserModal(true);
+  };
+
+  const handleSendInvite = () => {
+    if (!validateEmail(inviteUserEmail)) {
+      setEmailErrorMsg('Enter a Valid Email.');
+      return;
+    }
+    sendInvite().then().catch();
+  };
+
+  const onSetEmail = (value) => {
+    setInviteUserEmail(value);
+    setEmailErrorMsg('');
+  };
+
   useEffect(() => {
     fetchUsersFromOrganisation().then().catch();
   }, []);
@@ -93,24 +111,6 @@ export default function Users() {
       setRemoveUserDetails(null);
     }
   }
-
-  const handleOpenRemoveModal = (data: UserTeamDetails) => {
-    setRemoveUserDetails(data);
-    setOpenRemoveUserModal(true);
-  };
-
-  const handleSendInvite = () => {
-    if (!validateEmail(inviteUserEmail)) {
-      setEmailErrorMsg('Enter a Valid Email.');
-      return;
-    }
-    sendInvite().then().catch();
-  };
-
-  const onSetEmail = (value) => {
-    setInviteUserEmail(value);
-    setEmailErrorMsg('');
-  };
 
   return (
     <div id={'users'} className={'proxima_nova flex flex-col gap-6'}>

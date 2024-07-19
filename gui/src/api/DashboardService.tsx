@@ -31,14 +31,14 @@ export const checkUserEmailExists = (user_email: string) => {
   });
 };
 
-export const login = (payload: authPayload, invite_token: string = null) => {
-  const headers = invite_token ? { 'X-INVITE-TOKEN': invite_token } : {};
+export const login = ({ inviteToken, ...payload }: authPayload) => {
+  const headers = inviteToken ? { 'X-INVITE-TOKEN': inviteToken } : {};
   return api.post(`/auth/sign_in`, payload, { headers });
 };
 
-export const signUp = (payload: authPayload, invite_token: string = null) => {
-  const headers = invite_token ? { 'X-INVITE-TOKEN': invite_token } : {};
-  return api.post(`/auth/sign_up`, payload, { headers });
+export const signUp = ({ inviteToken, ...payload }: authPayload) => {
+  const headers = inviteToken ? { 'X-INVITE-TOKEN': inviteToken } : {};
+  return api.post(`/auth/sign_ups`, payload, { headers });
 };
 
 // Project APIs
